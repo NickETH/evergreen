@@ -10,6 +10,7 @@ Function Export-EvergreenManifest {
         [System.String] $Name
     )
     
+    <#
     try {
         $Output = Get-FunctionResource -AppName $Name
     }
@@ -18,7 +19,9 @@ Function Export-EvergreenManifest {
         Write-Warning -Message "Documentation on how to contribute a new application to the Evergreen project can be found at: $($script:resourceStrings.Uri.Docs)."
         Throw "Failed to retrieve manifest for application: $Name."
     }
-    If ($Output) {
+    #>
+    $Output = Get-FunctionResource -AppName $Name
+    If ($Null -ne $Output) {
         Write-Output -InputObject $Output
     }
 }

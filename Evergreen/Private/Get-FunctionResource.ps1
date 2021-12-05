@@ -19,7 +19,7 @@ Function Get-FunctionResource {
     If (Test-Path -Path $AppManifest) {
         try {
             Write-Verbose -Message "$($MyInvocation.MyCommand): read application resource strings from [$AppManifest]"
-            $content = Get-Content -Path $AppManifest -Raw -ErrorAction "Stop"
+            $content = Get-Content -Path $AppManifest -Raw -ErrorAction "SilentlyContinue"
         }
         catch {
             Write-Error -Message "$($MyInvocation.MyCommand): Failed to read from: $AppManifest with $($_.Exception.Message)."
@@ -30,21 +30,22 @@ Function Get-FunctionResource {
     }
 
     # Convert the content from JSON into a hashtable
-    try {
-        If (Test-PSCore) {
-            $hashTable = $content | ConvertFrom-Json -AsHashtable -ErrorAction "Stop"
+    If ($Null -ne $content) {
+        try {
+            If (Test-PSCore) {
+                $hashTable = $content | ConvertFrom-Json -AsHashtable -ErrorAction "Stop"
+            }
+            Else {
+                $hashTable = $content | ConvertFrom-Json -ErrorAction "Stop" | ConvertTo-Hashtable
+            }
         }
-        Else {
-            $hashTable = $content | ConvertFrom-Json -ErrorAction "Stop" | ConvertTo-Hashtable
+        catch {
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to to hashtable with: $($_.Exception.Message)"
         }
-    }
-    catch {
-        Write-Error -Message "$($MyInvocation.MyCommand): failed to convert strings to required hashtable object."
-        Write-Error -Message "$($MyInvocation.MyCommand): $($_.Exception.Message)."
-    }
 
-    # If we got a hashtable, return it to the pipeline
-    If ($Null -ne $hashTable) {
-        Write-Output -InputObject $hashTable
+        # If we got a hashtable, return it to the pipeline
+        If ($Null -ne $hashTable) {
+            Write-Output -InputObject $hashTable
+        }
     }
 }

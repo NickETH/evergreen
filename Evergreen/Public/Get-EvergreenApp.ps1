@@ -85,7 +85,7 @@ Function Get-EvergreenApp {
         Else {
             Write-Warning -Message "Please list valid application names with Find-EvergreenApp."
             Write-Warning -Message "Documentation on how to contribute a new application to the Evergreen project can be found at: $($script:resourceStrings.Uri.Docs)."
-            Write-Error -Message "$($MyInvocation.MyCommand): Cannot find application script at: $Function."
+            Write-Error -Message "Cannot find application script at: $Function."
         }
         #endregion
     }

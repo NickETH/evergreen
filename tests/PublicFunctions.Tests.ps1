@@ -71,6 +71,7 @@ Describe -Tag "Get" -Name "Get-EvergreenApp <application>" -ForEach $Application
     }
 }
 
+<#
 Describe -Tag "Get" -Name "Get-EvergreenApp fail tests" {
     Context "Validate 'Get-EvergreenApp fails gracefully" {
         It "Should Throw with invalid app" {
@@ -78,6 +79,7 @@ Describe -Tag "Get" -Name "Get-EvergreenApp fail tests" {
         }
     }
 }
+#>
 
 Describe -Tag "Find" -Name "Find-EvergreenApp" {
     Context "Validate Find-EvergreenApp works" {
@@ -154,6 +156,7 @@ Describe -Tag "Export" -Name "Export-EvergreenManifest" -ForEach $Applications {
     }
 }
 
+<#
 Describe -Tag "Export" -Name "Export-EvergreenManifest fail tests" {
     Context "Validate Export-EvergreenManifest fails gracefully" {
         It "Should Throw with invalid app" {
@@ -161,5 +164,6 @@ Describe -Tag "Export" -Name "Export-EvergreenManifest fail tests" {
         }
     }
 }
+#>
 
 Write-Host ""
