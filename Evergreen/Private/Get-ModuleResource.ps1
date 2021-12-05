@@ -8,7 +8,7 @@ Function Get-ModuleResource {
     param (
         [Parameter(Mandatory = $False, Position = 0)]
         [ValidateNotNull()]
-        [ValidateScript( { If (Test-Path -Path $_ -PathType 'Leaf') { $True } Else { Throw "Cannot find file $_" } })]
+        [ValidateScript( { If (Test-Path -Path $_ -PathType 'Leaf') { $True } Else { Throw "$($MyInvocation.MyCommand) Cannot find file $_" } })]
         [System.String] $Path = (Join-Path -Path $MyInvocation.MyCommand.Module.ModuleBase -ChildPath "Evergreen.json")
     )
     
@@ -22,7 +22,7 @@ Function Get-ModuleResource {
         $content = Get-Content @params
     }
     catch {
-        Throw -Message "$($MyInvocation.MyCommand): failed to read from: $Path, with: $($_.Exception.Message)"
+        Throw "$($MyInvocation.MyCommand): failed to read from: $Path, with: $($_.Exception.Message)"
     }
 
     try {

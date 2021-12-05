@@ -84,7 +84,7 @@ Function Save-EvergreenApp {
                 New-Item @params | Out-Null
             }
             catch {
-                Throw "$($MyInvocation.MyCommand): Failed to create $NewPath with: $($_.Exception.Message)"
+                Throw "Failed to create $NewPath with: $($_.Exception.Message)"
             }
         }
         #endregion
@@ -109,7 +109,7 @@ Function Save-EvergreenApp {
                 }
             }
             Else {
-                Throw "$($MyInvocation.MyCommand): Object does not have valid URI property."
+                Write-Error -Message "Object does not have valid URI property."
             }
             #endregion
 
@@ -127,12 +127,12 @@ Function Save-EvergreenApp {
                             $OutPath = New-EvergreenPath -InputObject $Object -Path $OutPath
                         }
                         Else {
-                            Throw "$($MyInvocation.MyCommand): Object does not have valid Version property."
+                            Write-Error -Message "Object does not have valid Version property."
                         }
                         #endregion
                     }
                     Else {
-                        Throw "$($MyInvocation.MyCommand): Failed validating $OutPath."
+                        Write-Error -Message "Failed validating path: $OutPath."
                     }
                 }
                 "CustomPath" {
@@ -171,7 +171,7 @@ Function Save-EvergreenApp {
                         #endregion
                     }
                     catch [System.Exception] {
-                        Throw "$($MyInvocation.MyCommand): URL: [$($Object.URI)]. Download failed with: [$($_.Exception.Message)]"
+                        Write-Error -Message "URL: $($Object.URI) - download failed with: [$($_.Exception.Message)]"
                     }
                 }
                 Else {

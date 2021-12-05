@@ -35,7 +35,7 @@ Function Get-GitHubRelease {
                     $True
                 }
                 Else {
-                    Throw "'$_' must be in the format 'https://api.github.com/repos/user/repository/releases/latest'. Replace 'user' with the user or organisation and 'repository' with the target repository name."
+                    Throw "$($MyInvocation.MyCommand): '$_' must be in the format 'https://api.github.com/repos/user/repository/releases/latest'. Replace 'user' with the user or organisation and 'repository' with the target repository name."
                 }
             })]
         [System.String] $Uri = "https://api.github.com/repos/atom/atom/releases/latest"

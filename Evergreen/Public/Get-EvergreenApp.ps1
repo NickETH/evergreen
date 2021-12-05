@@ -32,7 +32,7 @@ Function Get-EvergreenApp {
             $Function = [System.IO.Path]::Combine($MyInvocation.MyCommand.Module.ModuleBase, "Apps", "Get-$Name.ps1")
         }
         catch {
-            Throw "$($MyInvocation.MyCommand): Failed to combine: $($MyInvocation.MyCommand.Module.ModuleBase), Apps, Get-$Name.ps1"
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to combine: $($MyInvocation.MyCommand.Module.ModuleBase), Apps, Get-$Name.ps1"
         }
 
         #region Test that the function exists and run it to return output
@@ -47,7 +47,7 @@ Function Get-EvergreenApp {
                 . $Function
             }
             catch {
-                Throw "$($MyInvocation.MyCommand): Failed to load function: $Function."
+                Write-Error -Message "$($MyInvocation.MyCommand): Failed to load function: $Function."
             }
 
             try {
@@ -69,7 +69,7 @@ Function Get-EvergreenApp {
                 $Output = & Get-$Name @params
             }
             catch {
-                Throw "$($MyInvocation.MyCommand): Internal application function: $Function, failed with: $($_.Exception.Message)"
+                Write-Error -Message "$($MyInvocation.MyCommand): Internal application function: $Function, failed with: $($_.Exception.Message)"
             }
 
             # If we get an object, return it to the pipeline
@@ -79,13 +79,13 @@ Function Get-EvergreenApp {
                 Write-Output -InputObject ($Output | Sort-Object -Property @{ Expression = { [System.Version]$_.Version }; Descending = $true } -ErrorAction "SilentlyContinue")
             }
             Else {
-                Throw "$($MyInvocation.MyCommand): Failed to capture output from: Get-$Name."
+                Write-Error -Message "$($MyInvocation.MyCommand): Failed to capture output from: Get-$Name."
             }
         }
         Else {
             Write-Warning -Message "Please list valid application names with Find-EvergreenApp."
             Write-Warning -Message "Documentation on how to contribute a new application to the Evergreen project can be found at: $($script:resourceStrings.Uri.Docs)."
-            Throw "$($MyInvocation.MyCommand): Cannot find application script at: $Function."
+            Write-Error -Message "$($MyInvocation.MyCommand): Cannot find application script at: $Function."
         }
         #endregion
     }

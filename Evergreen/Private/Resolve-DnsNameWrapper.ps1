@@ -29,16 +29,16 @@ Function Resolve-DnsNameWrapper {
             $Response = Resolve-DnsName @params | Where-Object { $_.Type -eq $Type }
         }
         catch {
-            Throw $_.Exception.Message
+            Write-Error -Message "$($MyInvocation.MyCommand): $($_.Exception.Message)."
         }
         If ($Null -ne $Response) {
             Write-Output -InputObject $Response
         }
         Else {
-            Write-Error -Message "$($MyInvocation.MyCommand): failed to return a useable object from Resolve-DnsName."
+            Write-Error -Message "$($MyInvocation.MyCommand): returned a null object from Resolve-DnsName."
         }
     }
     Else {
-        Write-Error -Message "$($MyInvocation.MyCommand): this function requires Microsoft Windows."
+        Write-Error -Message "$($MyInvocation.MyCommand): this function requires the Resolve-DnsName on Microsoft Windows."
     }
 }
