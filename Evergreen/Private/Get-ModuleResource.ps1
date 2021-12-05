@@ -22,8 +22,7 @@ Function Get-ModuleResource {
         $content = Get-Content @params
     }
     catch {
-        Write-Warning -Message "$($MyInvocation.MyCommand): failed to read from: $Path."
-        Throw $_.Exception.Message
+        Throw -Message "$($MyInvocation.MyCommand): failed to read from: $Path, with: $($_.Exception.Message)"
     }
 
     try {
@@ -35,12 +34,9 @@ Function Get-ModuleResource {
         }
     }
     catch {
-        Write-Warning -Message "$($MyInvocation.MyCommand): failed to convert strings to required object."
-        Throw $_.Exception.Message
+        Throw "$($MyInvocation.MyCommand): failed to convert strings to required object with: $($_.Exception.Message)."
     }
-    finally {
-        If ($Null -ne $script:resourceStringsTable) {
-            Write-Output -InputObject $script:resourceStringsTable
-        }
+    If ($Null -ne $script:resourceStringsTable) {
+        Write-Output -InputObject $script:resourceStringsTable
     }
 }

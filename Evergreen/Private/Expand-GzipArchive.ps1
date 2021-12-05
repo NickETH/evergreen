@@ -3,12 +3,12 @@ Function Expand-GzipArchive {
     param (
         [Parameter(Mandatory = $True, Position = 0)]
         [ValidateNotNullOrEmpty()]
-        [ValidateScript( { If (Test-Path -Path $_ -PathType "Leaf") { $True } Else { Throw "Cannot find path $_." } })]
+        [ValidateScript( { If (Test-Path -Path $_ -PathType "Leaf") { $True } Else { Throw "$($MyInvocation.MyCommand): Cannot find path $_." } })]
         [System.String] $Path,
         
         [Parameter(Mandatory = $False, Position = 1)]
         [ValidateNotNullOrEmpty()]
-        [ValidateScript( { If (Test-Path -Path $(Split-Path -Path $_ -Parent) -PathType "Container") { $True } Else { Throw "Cannot find path $(Split-Path -Path $_ -Parent)." } })]
+        [ValidateScript( { If (Test-Path -Path $(Split-Path -Path $_ -Parent) -PathType "Container") { $True } Else { Throw "$($MyInvocation.MyCommand): Cannot find path $(Split-Path -Path $_ -Parent)." } })]
         [System.String] $DestinationPath = ($Path -replace "\.gz$", ""),
 
         [Parameter()]
@@ -34,7 +34,7 @@ Function Expand-GzipArchive {
         ([System.IO.Compression.CompressionMode]::Decompress)
     }
     catch {
-        Throw "$($MyInvocation.MyCommand): $($_.Exception.Message)."
+        Write-Error -Message "$($MyInvocation.MyCommand): $($_.Exception.Message)."
     }
     
     # Expand the archive
@@ -49,7 +49,7 @@ Function Expand-GzipArchive {
             }
         }
         catch {
-            Throw "$($MyInvocation.MyCommand): $($_.Exception.Message)."
+            Write-Error -Message "$($MyInvocation.MyCommand): $($_.Exception.Message)."
         }
         finally {
             # Close the streams

@@ -15,7 +15,7 @@ Function Get-GitHubRepoRelease {
                     $True
                 }
                 Else {
-                    Throw "'$_' must be in the format 'https://api.github.com/repos/user/repository/releases/latest'. Replace 'user' with the user or organisation and 'repository' with the target repository name."
+                    Throw "$($MyInvocation.MyCommand): '$_' must be in the format 'https://api.github.com/repos/user/repository/releases/latest'. Replace 'user' with the user or organisation and 'repository' with the target repository name."
                 }
             })]
         [System.String] $Uri,
@@ -83,7 +83,7 @@ Function Get-GitHubRepoRelease {
             $release = Invoke-RestMethod @params
         }
         catch {
-            Write-Warning -Message "$($MyInvocation.MyCommand): request to Invoke-RestMethodWrapper failed."
+            Write-Error -Message "$($MyInvocation.MyCommand): request to Invoke-RestMethodWrapper failed."
             $response = $False
         }
 
@@ -116,7 +116,7 @@ Function Get-GitHubRepoRelease {
                         Write-Verbose -Message "$($MyInvocation.MyCommand): Validation failed."
                         $validate = $False
                         $missingProperties | ForEach-Object {
-                            Throw [System.Management.Automation.ValidationMetadataException] "$($MyInvocation.MyCommand): Property: '$_' missing"
+                            Write-Error -Message "$($MyInvocation.MyCommand): Missing Property: $_."
                         }
                     }
                 }

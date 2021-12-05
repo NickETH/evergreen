@@ -22,12 +22,11 @@ Function Get-FunctionResource {
             $content = Get-Content -Path $AppManifest -Raw -ErrorAction "Stop"
         }
         catch {
-            Write-Warning -Message "$($MyInvocation.MyCommand): failed to read from: $AppManifest."
-            Throw "$($MyInvocation.MyCommand): $($_.Exception.Message)."
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to read from: $AppManifest with $($_.Exception.Message)."
         }
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): manifest does not exist: $AppManifest."
+        Write-Error -Message "$($MyInvocation.MyCommand): manifest does not exist: $AppManifest."
     }
 
     # Convert the content from JSON into a hashtable
@@ -40,8 +39,8 @@ Function Get-FunctionResource {
         }
     }
     catch {
-        Write-Warning -Message "$($MyInvocation.MyCommand): failed to convert strings to required hashtable object."
-        Throw "$($MyInvocation.MyCommand): $($_.Exception.Message)."
+        Write-Error -Message "$($MyInvocation.MyCommand): failed to convert strings to required hashtable object."
+        Write-Error -Message "$($MyInvocation.MyCommand): $($_.Exception.Message)."
     }
 
     # If we got a hashtable, return it to the pipeline
