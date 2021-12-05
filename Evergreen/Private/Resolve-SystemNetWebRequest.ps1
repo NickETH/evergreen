@@ -25,10 +25,8 @@ Function Resolve-SystemNetWebRequest {
         $webResponse = $httpWebRequest.GetResponse()
     }
     catch {
-        Write-Warning -Message "$($MyInvocation.MyCommand): Error at URI: $Uri."
-        Write-Warning -Message "$($MyInvocation.MyCommand): Response: $($_)."
+        Write-Error -Message "$($MyInvocation.MyCommand): Error at $Uri with: $($_.Exception.Message)"
         Write-Warning -Message "$($MyInvocation.MyCommand): For troubleshooting steps see: $($script:resourceStrings.Uri.Info)."
-        #Write-Error -Message "$($MyInvocation.MyCommand): $($_.Exception.Message)."
     }
     finally {
         If ($webResponse) {

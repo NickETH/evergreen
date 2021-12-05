@@ -112,11 +112,9 @@ public class TrustAllCertsPolicy : ICertificatePolicy {
         $Response = Invoke-RestMethod @irmParams
     }
     catch {
-        Write-Warning -Message "$($MyInvocation.MyCommand): Error at URI: $Uri."
-        Write-Warning -Message "$($MyInvocation.MyCommand): Error encountered: $($_.Exception.Message)."
+        Write-Error -Message "$($MyInvocation.MyCommand): Error at $Uri with: $($_.Exception.Message)."
         Write-Warning -Message "$($MyInvocation.MyCommand): For troubleshooting steps see: $($script:resourceStrings.Uri.Info)."
         Break
-        #Write-Error -Message "$($MyInvocation.MyCommand): $($_.Exception.Message)."
     }
     finally {
         Write-Output -InputObject $Response

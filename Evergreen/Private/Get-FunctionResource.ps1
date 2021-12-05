@@ -22,7 +22,8 @@ Function Get-FunctionResource {
             $content = Get-Content -Path $AppManifest -Raw -ErrorAction "SilentlyContinue"
         }
         catch {
-            Write-Error -Message "$($MyInvocation.MyCommand): Failed to read from: $AppManifest with $($_.Exception.Message)."
+            # We want to Throw here because this prevents the module from working
+            Throw "$($MyInvocation.MyCommand): Failed to read from: $AppManifest with $($_.Exception.Message)."
         }
     }
     Else {
@@ -33,14 +34,15 @@ Function Get-FunctionResource {
     If ($Null -ne $content) {
         try {
             If (Test-PSCore) {
-                $hashTable = $content | ConvertFrom-Json -AsHashtable -ErrorAction "Stop"
+                $hashTable = $content | ConvertFrom-Json -AsHashtable -ErrorAction "SilentlyContinue"
             }
             Else {
-                $hashTable = $content | ConvertFrom-Json -ErrorAction "Stop" | ConvertTo-Hashtable
+                $hashTable = $content | ConvertFrom-Json -ErrorAction "SilentlyContinue" | ConvertTo-Hashtable
             }
         }
         catch {
-            Write-Error -Message "$($MyInvocation.MyCommand): Failed to to hashtable with: $($_.Exception.Message)"
+            # We want to Throw here because this prevents the module from working
+            Throw "$($MyInvocation.MyCommand): Failed to to hashtable with: $($_.Exception.Message)"
         }
 
         # If we got a hashtable, return it to the pipeline

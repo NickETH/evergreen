@@ -40,7 +40,7 @@ Function New-EvergreenPath {
                         New-Item @params > $Null
                     }
                     catch {
-                        Write-Error -Message "$($MyInvocation.MyCommand): Failed to create target directory. Error failed with: $($_.Exception.Message)."
+                        Write-Error -Message "$($MyInvocation.MyCommand): Failed to create target directory with: $($_.Exception.Message)."
                     }
                 }
             }

@@ -17,23 +17,25 @@ Function Get-ModuleResource {
         $params = @{
             Path        = $Path
             Raw         = $True
-            ErrorAction = "Stop"
+            ErrorAction = "SilentlyContinue"
         }
         $content = Get-Content @params
     }
     catch {
+        # We want to Throw here because this prevents the module from working
         Throw "$($MyInvocation.MyCommand): failed to read from: $Path, with: $($_.Exception.Message)"
     }
 
     try {
         If (Test-PSCore) {
-            $script:resourceStringsTable = $content | ConvertFrom-Json -AsHashtable -ErrorAction "Stop"
+            $script:resourceStringsTable = $content | ConvertFrom-Json -AsHashtable -ErrorAction "SilentlyContinue"
         }
         Else {
-            $script:resourceStringsTable = $content | ConvertFrom-Json -ErrorAction "Stop" | ConvertTo-Hashtable
+            $script:resourceStringsTable = $content | ConvertFrom-Json -ErrorAction "SilentlyContinue" | ConvertTo-Hashtable
         }
     }
     catch {
+        # We want to Throw here because this prevents the module from working
         Throw "$($MyInvocation.MyCommand): failed to convert strings to required object with: $($_.Exception.Message)."
     }
     If ($Null -ne $script:resourceStringsTable) {

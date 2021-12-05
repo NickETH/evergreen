@@ -47,10 +47,9 @@ Function Resolve-InvokeWebRequest {
             Write-Verbose -Message "$($MyInvocation.MyCommand): Response: [$($response.StatusCode) - $($response.StatusDescription)]."
         }
         catch [System.Exception] {
-            Write-Warning -Message "$($MyInvocation.MyCommand): Error at URI: $Uri."
-            Write-Warning -Message "$($MyInvocation.MyCommand): Response: [$($_.Exception.Response.StatusCode) - $($_.Exception.Response.ReasonPhrase)]."
+            Write-Error -Message "$($MyInvocation.MyCommand): Error at URI: $Uri."
+            Write-Error -Message "$($MyInvocation.MyCommand): Response: [$($_.Exception.Response.StatusCode) - $($_.Exception.Response.ReasonPhrase)]."
             Write-Warning -Message "$($MyInvocation.MyCommand): For troubleshooting steps see: $($script:resourceStrings.Uri.Info)."
-            #Write-Error -Message "$($MyInvocation.MyCommand): $($_.Exception.Message)."
         }
     }
 
@@ -60,10 +59,10 @@ Function Resolve-InvokeWebRequest {
             Write-Output -InputObject $redirectUrl
         }
         Else {
-            Write-Warning -Message "$($MyInvocation.MyCommand): failed to resolve correct output type (String)."
+            Write-Error -Message "$($MyInvocation.MyCommand): failed to resolve correct output type (String)."
         }
     }
     Else {
-        Write-Warning -Message "$($MyInvocation.MyCommand): failed to resolve a redirect at: $Uri."
+        Write-Error -Message "$($MyInvocation.MyCommand): failed to resolve a redirect at: $Uri."
     }
 }
