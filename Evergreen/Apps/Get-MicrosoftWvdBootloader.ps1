@@ -49,6 +49,6 @@ Function Get-MicrosoftWvdBootLoader {
         Write-Output -InputObject $PSObject
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): Failed to return a header from $($res.Get.Download.Uri)."
+        Write-Error -Message "$($MyInvocation.MyCommand): Failed to return a header from $($res.Get.Download.Uri)."
     }
 }

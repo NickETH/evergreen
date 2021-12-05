@@ -29,7 +29,7 @@ Function Get-MicrosoftVisualStudio {
             $updateFeed = Invoke-RestMethodWrapper -Uri $ResolvedUrl.ResponseUri.AbsoluteUri
         }
         catch {
-            Throw "$($MyInvocation.MyCommand): Failed to resolve update feed: $($ResolvedUrl.ResponseUri.AbsoluteUri)."
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to resolve update feed: $($ResolvedUrl.ResponseUri.AbsoluteUri)."
         }
         finally {
             # Build the output object/s

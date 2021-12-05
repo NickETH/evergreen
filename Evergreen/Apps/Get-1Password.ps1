@@ -39,6 +39,6 @@ Function Get-1Password {
         }
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): unable to retrieve content from $($res.Get.Update.Uri)."
+        Write-Error -Message "$($MyInvocation.MyCommand): unable to retrieve content from $($res.Get.Update.Uri)."
     }
 }

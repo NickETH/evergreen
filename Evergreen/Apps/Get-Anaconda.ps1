@@ -35,7 +35,7 @@ Function Get-Anaconda {
             $AllVersions = [RegEx]::Matches($FileNames, $res.Get.MatchVersion) | Select-Object -ExpandProperty Value -Unique
         }
         Catch {
-            Throw "$($MyInvocation.MyCommand): Failed to extract version numbers from $uri"
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to extract version numbers from $uri"
         }
 
         # Grab latest version number

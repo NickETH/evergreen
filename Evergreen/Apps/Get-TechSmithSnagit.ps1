@@ -52,7 +52,7 @@ Function Get-TechSmithSnagIt {
                         $Type = [RegEx]::Match($InstallerType.Key, $res.Get.Update.MatchType).Captures.Groups[0].Value
                     }
                     Catch {
-                        Throw "$($MyInvocation.MyCommand): failed to obtain file type information."
+                        Write-Error -Message "$($MyInvocation.MyCommand): failed to obtain file type information."
                     }
 
                     # Construct the output; Return the custom object to the pipeline
@@ -67,14 +67,14 @@ Function Get-TechSmithSnagIt {
                 }
             }       
             Else {
-                Throw "$($MyInvocation.MyCommand): Failed to determine the latest Windows release."      
+                Write-Error -Message "$($MyInvocation.MyCommand): Failed to determine the latest Windows release."      
             }
         }
         Else {
-            Throw "$($MyInvocation.MyCommand): Failed to determine the latest Snagit release."      
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to determine the latest Snagit release."      
         }
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): unable to retrieve content from $($res.Get.Update.Uri)."
+        Write-Error -Message "$($MyInvocation.MyCommand): unable to retrieve content from $($res.Get.Update.Uri)."
     }
 }

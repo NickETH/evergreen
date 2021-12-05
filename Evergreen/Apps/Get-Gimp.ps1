@@ -27,7 +27,7 @@ Function Get-Gimp {
         $updateFeed = Invoke-RestMethodWrapper -Uri $res.Get.Update.Uri
     }
     catch {
-        Throw "Failed to resolve update feed: $($res.Get.Update.Uri)."
+        Write-Error -Message "$($MyInvocation.MyCommand)Failed to resolve update feed: $($res.Get.Update.Uri)."
         Break
     }
     If ($Null -ne $updateFeed) {
@@ -55,7 +55,7 @@ Function Get-Gimp {
                     $redirectUrl = Resolve-InvokeWebRequest -Uri $Uri
                 }
                 catch {
-                    Throw "$($MyInvocation.MyCommand): Failed to resolve mirror from: $Uri."
+                    Write-Error -Message "$($MyInvocation.MyCommand): Failed to resolve mirror from: $Uri."
                 }
             
                 # Construct the output; Return the custom object to the pipeline
@@ -69,19 +69,19 @@ Function Get-Gimp {
                     Write-Output -InputObject $PSObject
                 }
                 Else {
-                    Throw "$($MyInvocation.MyCommand): Failed to return a useable URL from $Uri."
+                    Write-Error -Message "$($MyInvocation.MyCommand): Failed to return a useable URL from $Uri."
                 }
             }
             Else {
-                Throw "$($MyInvocation.MyCommand): Failed to determine the latest Windows release."      
+                Write-Error -Message "$($MyInvocation.MyCommand): Failed to determine the latest Windows release."      
             }
         }
         Else {
-            Throw "$($MyInvocation.MyCommand): Failed to determine the latest Gimp release."      
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to determine the latest Gimp release."      
         }
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): unable to retrieve content from $($res.Get.Update.Uri)."
+        Write-Error -Message "$($MyInvocation.MyCommand): unable to retrieve content from $($res.Get.Update.Uri)."
     }
     #endregion
 }

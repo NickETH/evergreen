@@ -44,7 +44,7 @@ Function Get-FreedomScientificFusion {
                 $Version = [RegEx]::Match($Release.FileName, $res.Get.Download.MatchVersion).Captures.Groups[1].Value 
             }
             catch {
-                Throw "$($MyInvocation.MyCommand): Failed to extract the version information from the uri."
+                Write-Error -Message "$($MyInvocation.MyCommand): Failed to extract the version information from the uri."
             }
   
             # Construct the output; Return the custom object to the pipeline
@@ -57,6 +57,6 @@ Function Get-FreedomScientificFusion {
         }
     }       
     Else {
-        Throw "$($MyInvocation.MyCommand): Failed to obtain latest releases for version $($LatestVersion.ProductMajor)."      
+        Write-Error -Message "$($MyInvocation.MyCommand): Failed to obtain latest releases for version $($LatestVersion.ProductMajor)."      
     }    
 }

@@ -35,7 +35,7 @@ Function Get-BlueJ {
             $Updates = [System.Text.Encoding]::UTF8.GetString($Content)
         }
         Catch {
-            Throw "$($MyInvocation.MyCommand): failed to convert feed into to UTF8."
+            Write-Error -Message "$($MyInvocation.MyCommand): failed to convert feed into to UTF8."
         }
 
         # Latest version is stored at the top of the file on its own line
@@ -46,7 +46,7 @@ Function Get-BlueJ {
             $Version = [RegEx]::Match($LatestVersion, $res.Get.MatchVersion).Captures.Groups[0].Value
         }
         Catch {
-            Throw "$($MyInvocation.MyCommand): failed to obtain latest version."
+            Write-Error -Message "$($MyInvocation.MyCommand): failed to obtain latest version."
         }
 
         # Construct the output; Return the custom object to the pipeline

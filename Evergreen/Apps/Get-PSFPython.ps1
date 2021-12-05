@@ -36,7 +36,7 @@ Function Get-PSFPython {
                     Write-Verbose -Message "$($MyInvocation.MyCommand): Found ReleaseID: [$releaseToQuery]."
                 }
                 Catch {
-                    Throw "$($MyInvocation.MyCommand): could not find release ID in resource uri."
+                    Write-Error -Message "$($MyInvocation.MyCommand): could not find release ID in resource uri."
                 }
 
                 # Query the python API to get the list of download uris
@@ -54,7 +54,7 @@ Function Get-PSFPython {
                     $windowsDownloadFeed = $downloadFeed | Where-Object { $_.url -match $res.Get.Download.MatchFileTypes }
                 }
                 catch {
-                    Throw "$($MyInvocation.MyCommand): could not filter download feed for executable filetypes."
+                    Write-Error -Message "$($MyInvocation.MyCommand): could not filter download feed for executable filetypes."
                 }
 
                 # Match this release with entries from the download feed
@@ -74,7 +74,7 @@ Function Get-PSFPython {
                             Write-Verbose -Message "$($MyInvocation.MyCommand): Found version:  [$FileVersion]."
                         }
                         Catch {
-                            Throw "$($MyInvocation.MyCommand): Failed to find exact version from: $($UniqueFile.url)" 
+                            Write-Error -Message "$($MyInvocation.MyCommand): Failed to find exact version from: $($UniqueFile.url)" 
                         }
 
                         # Construct the output; Return the custom object to the pipeline
@@ -93,15 +93,15 @@ Function Get-PSFPython {
 
                 }
                 Else {
-                    Throw "$($MyInvocation.MyCommand): Failed to lookup download URI based on release $($PythonVersion.resource_uri)."      
+                    Write-Error -Message "$($MyInvocation.MyCommand): Failed to lookup download URI based on release $($PythonVersion.resource_uri)."      
                 }
             }
         }
         Else {
-            Throw "$($MyInvocation.MyCommand): Release feed didn't contain any releases marked as latest."
+            Write-Error -Message "$($MyInvocation.MyCommand): Release feed didn't contain any releases marked as latest."
         }
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): Failed to obtain release information from json release feed."      
+        Write-Error -Message "$($MyInvocation.MyCommand): Failed to obtain release information from json release feed."      
     }
 }

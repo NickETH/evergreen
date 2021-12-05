@@ -38,7 +38,7 @@ Function Get-AdobeAcrobatReaderDC {
             $Content = Invoke-RestMethodWrapper @params
         }
         catch {
-            Throw "$($MyInvocation.MyCommand): $($_.Exception.Message)."
+            Write-Error -Message "$($MyInvocation.MyCommand): $($_.Exception.Message)."
         }
 
         If ($Content) {

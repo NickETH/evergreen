@@ -30,7 +30,7 @@ Function Get-MestrelabMnova {
             $windowsReleases = $updateFeed.Products.Product | Where-Object { $_.Platform -match $res.Get.Platform }
         }
         Catch {
-            Throw "$($MyInvocation.MyCommand): Failed to extract windows versions"
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to extract windows versions"
         }
 
         # Build the output object for each release

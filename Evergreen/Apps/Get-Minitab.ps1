@@ -36,7 +36,7 @@
             $URIs = [RegEx]::Matches($Updates, $res.Get.Update.MatchFile) | Select-Object -ExpandProperty Value
         }
         catch {
-            Throw "$($MyInvocation.MyCommand): Failed to determine the download URI(s) from the Ini file."
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to determine the download URI(s) from the Ini file."
         }
 
         # Get the Version(s) from the URI(s) found from the Ini file
@@ -44,7 +44,7 @@
             $Versions = [RegEx]::Matches($URIs, $res.Get.Update.MatchVersion) | Select-Object -ExpandProperty Value
         }
         catch {
-            Throw "$($MyInvocation.MyCommand): Failed to determine Version(s) from the URI(s)."
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to determine Version(s) from the URI(s)."
         }
 
         # Grab latest version, sort by descending version number 

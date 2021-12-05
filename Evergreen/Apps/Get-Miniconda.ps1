@@ -36,7 +36,7 @@ Function Get-Miniconda {
             $AllVersions = [RegEx]::Matches($FileNames, $res.Get.MatchVersion) | Select-Object -ExpandProperty "Value" -Unique
         }
         catch {
-            Throw "$($MyInvocation.MyCommand): Failed to extract version numbers from $uri"
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to extract version numbers from $uri"
         }
 
         # Grab latest version number

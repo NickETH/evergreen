@@ -44,7 +44,7 @@ Function Get-JetBrainsPyCharm {
             Write-Output -InputObject $PSObject
         }
         Else {
-            Throw "$($MyInvocation.MyCommand): unable to retrieve content from $($uri)."
+            Write-Error -Message "$($MyInvocation.MyCommand): unable to retrieve content from $($uri)."
         }
     }
 }

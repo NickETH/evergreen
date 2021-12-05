@@ -26,7 +26,7 @@ Function Get-MicrosoftPowerShell {
         $updateFeed = Invoke-RestMethodWrapper -Uri $res.Get.Update.Uri
     }
     catch {
-        Throw "Failed to resolve metadata: $($res.Get.Update.Uri)."
+        Write-Error -Message "$($MyInvocation.MyCommand)Failed to resolve metadata: $($res.Get.Update.Uri)."
         Break
     }
 

@@ -49,6 +49,6 @@ Function Get-MicrosoftAzureDataStudio {
         }
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): failed to get commit details from: $($res.Get.Update.Version.Uri)."
+        Write-Error -Message "$($MyInvocation.MyCommand): failed to get commit details from: $($res.Get.Update.Version.Uri)."
     }
 }

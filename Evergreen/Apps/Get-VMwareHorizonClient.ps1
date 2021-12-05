@@ -61,7 +61,7 @@
         $GZipFile = Save-File -Uri "$($res.Get.Download.Uri)$($LatestVersion.Url.TrimStart("../"))"
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): Failed to determine metadata property for the Horizon Client latest version."
+        Write-Error -Message "$($MyInvocation.MyCommand): Failed to determine metadata property for the Horizon Client latest version."
     }
     
     # Expand the downloaded Gzip file to get the XMl file
@@ -75,7 +75,7 @@
         $FileName = (Select-Xml -Xml $xmlDocument -XPath $res.Get.Download.FileXPath | Select-Object –ExpandProperty "node").($res.Get.Download.FileProperty)
     }
     catch {
-        Throw "$($MyInvocation.MyCommand): Failed to convert metadata XML."
+        Write-Error -Message "$($MyInvocation.MyCommand): Failed to convert metadata XML."
     }
     finally {
         Write-Verbose -Message "$($MyInvocation.MyCommand): Delete: $($GZipFile.FullName)."
@@ -93,6 +93,6 @@
         Write-Output -InputObject $PSObject
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): Failed to return usable properties from the XML file."
+        Write-Error -Message "$($MyInvocation.MyCommand): Failed to return usable properties from the XML file."
     }
 }

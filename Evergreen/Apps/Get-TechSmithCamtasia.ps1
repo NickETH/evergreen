@@ -58,14 +58,14 @@ Function Get-TechSmithCamtasia {
                 }
             }       
             Else {
-                Throw "$($MyInvocation.MyCommand): Failed to determine the latest Windows release."      
+                Write-Error -Message "$($MyInvocation.MyCommand): Failed to determine the latest Windows release."      
             }
         }
         Else {
-            Throw "$($MyInvocation.MyCommand): Failed to determine the latest Camtasia release."      
+            Write-Error -Message "$($MyInvocation.MyCommand): Failed to determine the latest Camtasia release."      
         }
     }
     Else {
-        Throw "$($MyInvocation.MyCommand): unable to retrieve content from $($res.Get.Update.Uri)."
+        Write-Error -Message "$($MyInvocation.MyCommand): unable to retrieve content from $($res.Get.Update.Uri)."
     }
 }
